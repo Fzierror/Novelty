@@ -108,7 +108,6 @@ class WebViewHtmlFetcher implements HtmlFetcher {
         url: origin,
         name: entry.key,
         value: entry.value,
-        path: '/',
       );
     }
   }
