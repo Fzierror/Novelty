@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:novelty/sites/novel_source.dart';
 
 /// 小説のダウンロード状態の集計情報を表すクラス。
 @immutable
@@ -9,9 +10,13 @@ class NovelDownloadSummary {
     required this.successCount,
     required this.failureCount,
     required this.totalEpisodes,
+    this.source = NovelSource.narou,
   });
 
-  /// 小説のncode
+  /// 提供サイト（プロバイダ）。
+  final NovelSource source;
+
+  /// 作品ID（なろうはncode、その他のサイトは各サイトの作品ID）
   final String ncode;
 
   /// ダウンロード成功したエピソード数
@@ -54,8 +59,10 @@ class NovelDownloadSummary {
     int? successCount,
     int? failureCount,
     int? totalEpisodes,
+    NovelSource? source,
   }) {
     return NovelDownloadSummary(
+      source: source ?? this.source,
       ncode: ncode ?? this.ncode,
       successCount: successCount ?? this.successCount,
       failureCount: failureCount ?? this.failureCount,
@@ -68,6 +75,7 @@ class NovelDownloadSummary {
       identical(this, other) ||
       other is NovelDownloadSummary &&
           runtimeType == other.runtimeType &&
+          source == other.source &&
           ncode == other.ncode &&
           successCount == other.successCount &&
           failureCount == other.failureCount &&
@@ -75,7 +83,7 @@ class NovelDownloadSummary {
 
   @override
   int get hashCode =>
-      Object.hash(ncode, successCount, failureCount, totalEpisodes);
+      Object.hash(source, ncode, successCount, failureCount, totalEpisodes);
 
   @override
   String toString() {

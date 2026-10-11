@@ -34,5 +34,23 @@ void main() {
         'https://kakuyomu.jp/works/',
       );
     });
+
+    test('ノクターン／ミッドナイトはnovel18の作品URLを組み立てる', () {
+      expect(
+        buildWorkUrl(NovelSource.nocturne, workId: 'N9999ZZ'),
+        'https://novel18.syosetu.com/n9999zz/',
+      );
+      expect(
+        buildWorkUrl(NovelSource.midnight, workId: 'n1111aa'),
+        'https://novel18.syosetu.com/n1111aa/',
+      );
+    });
+
+    test('ハーメルンはworkIdで作品URLを組み立てる', () {
+      expect(
+        buildWorkUrl(NovelSource.hameln, workId: '123456'),
+        'https://syosetu.org/novel/123456/',
+      );
+    });
   });
 }

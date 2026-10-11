@@ -139,7 +139,7 @@ class _DownloadListItem extends ConsumerWidget {
     final db = ref.watch(appDatabaseProvider);
 
     return FutureBuilder<Novel?>(
-      future: db.getNovel(NovelSource.narou, summary.ncode),
+      future: db.getNovel(summary.source, summary.ncode),
       builder: (context, snapshot) {
         final novelInfo = snapshot.data;
 
@@ -147,13 +147,16 @@ class _DownloadListItem extends ConsumerWidget {
         final novelData =
             novelInfo?.toModel() ??
             NovelInfo(
+              source: summary.source,
               workId: summary.ncode,
-              ncode: summary.ncode,
+              ncode: summary.source == NovelSource.narou
+                  ? summary.ncode
+                  : null,
               title: summary.ncode,
             );
 
         final progressAsync = ref.watch(
-          downloadProgressProvider(NovelSource.narou, summary.ncode),
+          downloadProgressProvider(summary.source, summary.ncode),
         );
 
         return Column(
@@ -248,7 +251,7 @@ class _CompletedListItem extends ConsumerWidget {
     final db = ref.watch(appDatabaseProvider);
 
     return FutureBuilder<Novel?>(
-      future: db.getNovel(NovelSource.narou, summary.ncode),
+      future: db.getNovel(summary.source, summary.ncode),
       builder: (context, snapshot) {
         final novelInfo = snapshot.data;
 
@@ -256,8 +259,11 @@ class _CompletedListItem extends ConsumerWidget {
         final novelData =
             novelInfo?.toModel() ??
             NovelInfo(
+              source: summary.source,
               workId: summary.ncode,
-              ncode: summary.ncode,
+              ncode: summary.source == NovelSource.narou
+                  ? summary.ncode
+                  : null,
               title: summary.ncode,
             );
 

@@ -1,18 +1,23 @@
+import 'package:novelty/sites/hameln/hameln_site.dart';
 import 'package:novelty/sites/kakuyomu/kakuyomu_site.dart';
 import 'package:novelty/sites/narou/narou_site.dart';
 import 'package:novelty/sites/novel_site.dart';
 import 'package:novelty/sites/novel_source.dart';
+import 'package:novelty/sites/syosetu18/syosetu18_site.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'novel_site_registry.g.dart';
 
 /// サイト種別とサイト実装の対応を管理するレジストリ。
 ///
-/// カクヨムはDioを保持するためconstにはできない。
+/// カクヨム等はDioを保持するためconstにはできない。
 final Map<NovelSource, NovelSite> defaultNovelSiteRegistry =
     <NovelSource, NovelSite>{
       NovelSource.narou: const NarouSite(),
       NovelSource.kakuyomu: KakuyomuSite(),
+      NovelSource.nocturne: Syosetu18Site.nocturne(),
+      NovelSource.midnight: Syosetu18Site.midnight(),
+      NovelSource.hameln: HamelnSite(),
     };
 
 /// サイト種別とサイト実装の対応を提供するプロバイダ。

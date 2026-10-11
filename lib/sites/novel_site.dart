@@ -141,6 +141,27 @@ abstract class NovelSite {
     throw UnsupportedError('${source.label} は目次取得に対応していません');
   }
 
+  /// 目次の1ページ分（最大 [tocPageSize] 件）を取得する。
+  ///
+  /// [page] は1始まり。デフォルト実装は [fetchToc] の全件を
+  /// [tocPageSize] 件ずつに区切って返す。
+  /// 目次がサーバー側でページ分割されているサイト（ノクターン等）は
+  /// オーバーライドして該当ページのみを取得する。
+  Future<List<Episode>> fetchTocPage(String workId, int page) async {
+    final all = await fetchToc(workId);
+    final start = (page - 1) * tocPageSize;
+    if (page < 1 || start >= all.length) {
+      return const <Episode>[];
+    }
+    final end = start + tocPageSize < all.length
+        ? start + tocPageSize
+        : all.length;
+    return all.sublist(start, end);
+  }
+
+  /// 目次1ページあたりのエピソード数。
+  static const int tocPageSize = 100;
+
   /// エピソード本文を取得する。
   ///
   /// [index] は目次順の連番、[url] は解決済みのエピソードURL

@@ -3,11 +3,17 @@ import 'package:novelty/sites/novel_source.dart';
 
 void main() {
   group('NovelSource', () {
-    test('定義されているサイト種別は narou と kakuyomu の2つ', () {
-      expect(NovelSource.values, hasLength(2));
+    test('定義されているサイト種別は5つ', () {
+      expect(NovelSource.values, hasLength(5));
       expect(
         NovelSource.values.map((source) => source.name),
-        containsAll(<String>['narou', 'kakuyomu']),
+        containsAll(<String>[
+          'narou',
+          'kakuyomu',
+          'nocturne',
+          'midnight',
+          'hameln',
+        ]),
       );
     });
 
@@ -25,6 +31,21 @@ void main() {
       expect(source.dbId, 'kakuyomu');
       expect(source.label, 'カクヨム');
       expect(source.baseUrl, 'https://kakuyomu.jp');
+    });
+
+    test('nocturne / midnight はnovel18を参照する', () {
+      expect(NovelSource.nocturne.label, 'ノクターンノベルズ');
+      expect(NovelSource.midnight.label, 'ミッドナイトノベルズ');
+      expect(NovelSource.nocturne.baseUrl, 'https://novel18.syosetu.com');
+      expect(NovelSource.midnight.baseUrl, 'https://novel18.syosetu.com');
+    });
+
+    test('hameln のメタデータが仕様どおり', () {
+      const source = NovelSource.hameln;
+
+      expect(source.dbId, 'hameln');
+      expect(source.label, 'ハーメルン');
+      expect(source.baseUrl, 'https://syosetu.org');
     });
 
     test('dbId は enum 名と同一', () {

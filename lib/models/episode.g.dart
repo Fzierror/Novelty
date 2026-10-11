@@ -37,4 +37,7 @@ Map<String, dynamic> _$EpisodeToJson(Episode instance) => <String, dynamic>{
 const _$NovelSourceEnumMap = {
   NovelSource.narou: 'narou',
   NovelSource.kakuyomu: 'kakuyomu',
+  NovelSource.nocturne: 'nocturne',
+  NovelSource.midnight: 'midnight',
+  NovelSource.hameln: 'hameln',
 };

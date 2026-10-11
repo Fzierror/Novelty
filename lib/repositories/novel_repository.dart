@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
@@ -206,8 +205,8 @@ class NovelRepository {
 
   /// エピソードリスト（目次）を取得するヘルパーメソッド。
   ///
-  /// なろうはページングAPI、カクヨムは全件目次（`episode_sidebar`）を
-  /// ページ単位にスライスして返す。
+  /// なろうはページングAPI、その他のサイトは [NovelSite.fetchTocPage] で
+  /// ページ単位に取得する。
   Future<List<Episode>> _fetchEpisodeList(
     NovelSource source,
     String workId,
@@ -216,13 +215,8 @@ class NovelRepository {
     if (source == NovelSource.narou) {
       return apiService.fetchEpisodeList(workId, page);
     }
-    final all = await _sites[source]!.fetchToc(workId);
-    final start = (page - 1) * 100;
-    final end = math.min(start + 100, all.length);
-    if (start >= all.length) {
-      return const <Episode>[];
-    }
-    return all.sublist(start, end);
+    // サイト実装側でページ単位に取得する（全件取得→スライスがデフォルト）
+    return _sites[source]!.fetchTocPage(workId, page);
   }
 
   /// エピソード本文をコンテンツ要素へパースするヘルパーメソッド。
@@ -230,10 +224,12 @@ class NovelRepository {
     NovelSource source,
     String body,
   ) {
-    if (source == NovelSource.narou) {
-      return parseNovelContent(body);
+    // ノクターン／ミッドナイト／ハーメルンの本文も <p>＋<ruby> 構造のため
+    // なろうパーサーで処理する
+    if (source == NovelSource.kakuyomu) {
+      return parseKakuyomuEpisodeBody(body);
     }
-    return parseKakuyomuEpisodeBody(body);
+    return parseNovelContent(body);
   }
 
   /// 単一エピソードのダウンロードを実行するメソッド。

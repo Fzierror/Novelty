@@ -66,7 +66,7 @@ class KakuyomuHttpException implements Exception {
 /// - robots.txt で取得禁止のパス（`/read` ページ等）は取得しない
 /// - レートリミッターによりリクエスト間隔を制御する
 /// - 本文キャッシュはレポジトリ層（DB）でキャッシュファースト運用する
-class KakuyomuSite implements NovelSite {
+class KakuyomuSite extends NovelSite {
   /// コンストラクタ。
   ///
   /// [dio] と [rateLimiter] はテスト時に注入できる。

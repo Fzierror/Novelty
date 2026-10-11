@@ -120,4 +120,7 @@ Map<String, dynamic> _$NovelSearchQueryToJson(_NovelSearchQuery instance) =>
 const _$NovelSourceEnumMap = {
   NovelSource.narou: 'narou',
   NovelSource.kakuyomu: 'kakuyomu',
+  NovelSource.nocturne: 'nocturne',
+  NovelSource.midnight: 'midnight',
+  NovelSource.hameln: 'hameln',
 };

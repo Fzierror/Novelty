@@ -7,7 +7,16 @@ enum NovelSource {
   narou('narou', '小説家になろう', 'https://ncode.syosetu.com'),
 
   /// カクヨム。
-  kakuyomu('kakuyomu', 'カクヨム', 'https://kakuyomu.jp');
+  kakuyomu('kakuyomu', 'カクヨム', 'https://kakuyomu.jp'),
+
+  /// ノクターンノベルズ（なろうR18・男性向け）。
+  nocturne('nocturne', 'ノクターンノベルズ', 'https://novel18.syosetu.com'),
+
+  /// ミッドナイトノベルズ（なろうR18・大人向け）。
+  midnight('midnight', 'ミッドナイトノベルズ', 'https://novel18.syosetu.com'),
+
+  /// ハーメルン。
+  hameln('hameln', 'ハーメルン', 'https://syosetu.org');
 
   /// コンストラクタ。
   const NovelSource(this.dbId, this.label, this.baseUrl);
