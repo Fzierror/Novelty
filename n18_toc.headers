@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Date: Sun, 11 Oct 2026 12:46:36 GMT
+Server: Apache
+Set-Cookie: ks2=1qa60ygnpcb; expires=Mon, 11 Oct 2027 12:46:36 GMT; Max-Age=31536000; path=/; domain=syosetu.com; secure
+Set-Cookie: nlist3=1zlv7.0; expires=Mon, 11 Oct 2027 12:46:36 GMT; Max-Age=31536000; path=/; domain=syosetu.com; secure
+Vary: Accept-Encoding
+Connection: close
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=UTF-8
+

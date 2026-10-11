@@ -1,0 +1,9 @@
+h_top 403 https://syosetu.org/
+h_rank 403 https://syosetu.org/?mode=rank
+h_search 403 https://syosetu.org/search/?mode=search&word=%E9%AD%94%E6%B3%95
+h_robots 403 https://syosetu.org/robots.txt
+novel_id=
+n18_rank_api 200 https://api.syosetu.com/novel18api/api/?out=json&nocgenre=1&order=dailypoint&lim=2
+ncode=n1249mw
+n18_toc 200 https://novel18.syosetu.com/n1249mw/
+n18_ep1 404 https://novel18.syosetu.com/n1249mw/1/
