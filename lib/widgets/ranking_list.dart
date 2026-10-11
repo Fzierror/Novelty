@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:novelty/providers/ranking_provider.dart';
+import 'package:novelty/screens/site_verification_page.dart';
 import 'package:novelty/sites/novel_source.dart';
+import 'package:novelty/sites/site_http.dart';
 import 'package:novelty/widgets/novel_list_tile.dart';
 
 /// ランキングリストを表示するウィジェット。
@@ -72,6 +74,25 @@ class RankingList extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 8),
+            // ボット確認で止まった場合は、アプリ内ブラウザで本人が通過できる
+            if (rankingState.error case final BotChallengeException e) ...[
+              FilledButton(
+                key: const Key('ranking_verify_button'),
+                onPressed: () async {
+                  final verified = await SiteVerificationPage.open(
+                    context,
+                    e.url,
+                  );
+                  if (verified) {
+                    await ref
+                        .read(rankingProvider(source, rankingType).notifier)
+                        .refresh();
+                  }
+                },
+                child: const Text('ブラウザで確認する'),
+              ),
+              const SizedBox(height: 8),
+            ],
             ElevatedButton(
               onPressed: () {
                 unawaited(

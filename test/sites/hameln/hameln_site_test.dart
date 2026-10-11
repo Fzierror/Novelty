@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:novelty/models/novel_search_query.dart';
 import 'package:novelty/services/api_service.dart' show NovelNotFoundException;
 import 'package:novelty/sites/hameln/hameln_site.dart';
+import 'package:novelty/sites/html_fetcher.dart';
 import 'package:novelty/sites/novel_source.dart';
 import 'package:novelty/sites/site_http.dart';
 
@@ -42,6 +43,20 @@ class _HandlerAdapter implements HttpClientAdapter {
 
   @override
   void close({bool force = false}) {}
+}
+
+/// 取得したURLを記録し、固定のHTMLを返すフェッチャー。
+class _FakeFetcher implements HtmlFetcher {
+  _FakeFetcher(this.html);
+
+  final String html;
+  final List<String> urls = <String>[];
+
+  @override
+  Future<String> fetch(String url) async {
+    urls.add(url);
+    return html;
+  }
 }
 
 String _fixture(String name) =>
@@ -183,6 +198,23 @@ void main() {
         _site(adapter).fetchEpisode('123456', 1),
         throwsA(isA<FormatException>()),
       );
+    });
+  });
+
+  group('HtmlFetcher（WebView取得）', () {
+    test('fetcherを指定するとHTTP通信の代わりにそれで取得する', () async {
+      final adapter = _HandlerAdapter((_) => null);
+      final fetcher = _FakeFetcher(_fixture('novel_top.html'));
+      final site = HamelnSite(
+        dio: Dio()..httpClientAdapter = adapter,
+        rateLimiter: SiteRateLimiter(interval: Duration.zero),
+        fetcher: fetcher,
+      );
+      final info = await site.fetchNovelInfo('123456');
+
+      expect(fetcher.urls, ['https://syosetu.org/novel/123456/']);
+      expect(adapter.requested, isEmpty);
+      expect(info.title, 'テスト二次創作');
     });
   });
 

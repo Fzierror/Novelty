@@ -7,6 +7,7 @@ import 'package:novelty/models/novel_search_query.dart';
 import 'package:novelty/models/novel_search_result.dart';
 import 'package:novelty/models/ranking_page.dart';
 import 'package:novelty/services/api_service.dart' show NovelNotFoundException;
+import 'package:novelty/sites/html_fetcher.dart';
 import 'package:novelty/sites/novel_site.dart';
 import 'package:novelty/sites/novel_source.dart';
 import 'package:novelty/sites/site_http.dart';
@@ -19,6 +20,8 @@ import 'package:novelty/sites/site_http.dart';
 /// - 作品トップ: `/novel/{id}/`（目次。短編は本文を直接含む）
 /// - 本文: `/novel/{id}/{n}.html`（`#honbun`）
 /// - R18作品の年齢確認は Cookie `over18=off` で省略する
+/// - サイト全体がCloudflareのボット確認で保護されているため、
+///   アプリでは WebView（[HamelnSite.withWebView]）経由で取得する
 /// - サーバー負荷軽減のため2秒間隔でアクセスする
 ///
 /// 検索結果・ランキングはレイアウト変更に強くするため、
@@ -27,12 +30,24 @@ class HamelnSite extends NovelSite {
   /// コンストラクタ。
   ///
   /// [dio] と [rateLimiter] はテスト時に注入できる。
-  HamelnSite({Dio? dio, SiteRateLimiter? rateLimiter})
+  ///
+  /// [fetcher] を指定した場合はHTTP通信の代わりにそれでHTMLを取得する
+  /// （アプリではボット確認を通過できるWebView実装を渡す）。
+  HamelnSite({Dio? dio, SiteRateLimiter? rateLimiter, HtmlFetcher? fetcher})
     : _dio = dio ?? Dio(),
+      _fetcher = fetcher,
       _rateLimiter =
           rateLimiter ?? SiteRateLimiter(interval: const Duration(seconds: 2));
 
+  /// アプリ用：WebView（実ブラウザエンジン）でHTMLを取得する構成を生成する。
+  factory HamelnSite.withWebView() => HamelnSite(
+    fetcher: const WebViewHtmlFetcher(
+      cookies: <String, String>{'over18': 'off'},
+    ),
+  );
+
   final Dio _dio;
+  final HtmlFetcher? _fetcher;
   final SiteRateLimiter _rateLimiter;
 
   /// 年齢確認を省略するCookie。
@@ -430,6 +445,10 @@ class HamelnSite extends NovelSite {
   /// 年齢確認Cookieを付与してGETし、HTML文字列を返す。
   Future<String> _fetch(String url) async {
     await _rateLimiter.wait();
+    final fetcher = _fetcher;
+    if (fetcher != null) {
+      return fetcher.fetch(url);
+    }
     final response = await _dio.get<String>(
       url,
       options: Options(

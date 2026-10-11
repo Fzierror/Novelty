@@ -9,9 +9,11 @@ import 'package:novelty/domain/ranking_filter_state.dart';
 import 'package:novelty/domain/search_state.dart';
 import 'package:novelty/models/novel_search_query.dart';
 import 'package:novelty/router/router.dart';
+import 'package:novelty/screens/site_verification_page.dart';
 import 'package:novelty/sites/novel_site.dart';
 import 'package:novelty/sites/novel_site_registry.dart';
 import 'package:novelty/sites/novel_source.dart';
+import 'package:novelty/sites/site_http.dart';
 import 'package:novelty/utils/settings_provider.dart';
 import 'package:novelty/widgets/app_bar_source_dropdown.dart';
 import 'package:novelty/widgets/novel_list_tile.dart';
@@ -364,6 +366,24 @@ class _EnrichedSearchResults extends HookConsumerWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
+              ),
+            ],
+            // ボット確認で止まった場合は、アプリ内ブラウザで本人が通過できる
+            if (searchState.error case final BotChallengeException e) ...[
+              const SizedBox(height: 8),
+              FilledButton(
+                key: const Key('search_verify_button'),
+                onPressed: () async {
+                  final verified = await SiteVerificationPage.open(
+                    context,
+                    e.url,
+                  );
+                  // 通過後は検索条件画面を開き、そのまま再検索できるようにする
+                  if (verified) {
+                    onModifySearch();
+                  }
+                },
+                child: const Text('ブラウザで確認する'),
               ),
             ],
             const SizedBox(height: 16),

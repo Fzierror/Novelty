@@ -44,13 +44,19 @@ jobs:
       - name: Run code generation
         run: mise run codegen
 
-      # テスト結果はログで確認できるようにし、失敗してもAPKは作成する
-      - name: Run site tests
+      # 解析・テスト結果は ci-logs ブランチに保存し、失敗してもAPKは作成する
+      - name: Analyze and test
         continue-on-error: true
-        run: >-
-          mise exec -- flutter test
-          test/sites test/utils/work_url_test.dart
-          test/models/novel_download_summary_test.dart
+        run: |
+          mkdir -p ci-logs
+          mise exec -- flutter analyze --no-fatal-infos > ci-logs/analyze.txt 2>&1 \
+            || echo "ANALYZE_EXIT=$?" >> ci-logs/analyze.txt
+          mise exec -- flutter test --reporter expanded \
+            test/sites test/utils/work_url_test.dart \
+            test/models/novel_download_summary_test.dart \
+            test/widgets/ranking_list_test.dart \
+            > ci-logs/test.txt 2>&1 || echo "TEST_EXIT=$?" >> ci-logs/test.txt
+          tail -5 ci-logs/analyze.txt ci-logs/test.txt
 
       - name: Use separate application id and label
         run: |
@@ -91,9 +97,26 @@ jobs:
           fi
 
       - name: Build APK (arm64)
-        run: >-
-          mise exec -- flutter build apk --release
-          --target-platform android-arm64
+        id: build
+        run: |
+          set -o pipefail
+          mise exec -- flutter build apk --release \
+            --target-platform android-arm64 2>&1 | tee ci-logs/build.txt
+
+      - name: Save CI logs to ci-logs branch
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p ci-logs && cd ci-logs
+          echo "${GITHUB_SHA}" > sha.txt
+          tail -c 200000 build.txt > build_tail.txt 2>/dev/null || true
+          rm -f build.txt
+          git init -q -b ci-logs
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -qm "ci logs ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-logs
 
       - name: Publish to GitHub Releases
         env:

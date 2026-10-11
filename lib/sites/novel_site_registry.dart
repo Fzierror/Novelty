@@ -17,7 +17,7 @@ final Map<NovelSource, NovelSite> defaultNovelSiteRegistry =
       NovelSource.kakuyomu: KakuyomuSite(),
       NovelSource.nocturne: Syosetu18Site.nocturne(),
       NovelSource.midnight: Syosetu18Site.midnight(),
-      NovelSource.hameln: HamelnSite(),
+      NovelSource.hameln: HamelnSite.withWebView(),
     };
 
 /// サイト種別とサイト実装の対応を提供するプロバイダ。
