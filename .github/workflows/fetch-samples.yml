@@ -1,0 +1,52 @@
+name: Fetch site samples
+
+# ハーメルン等の実際のHTMLを取得して samples ブランチに保存する（解析の調査用）
+on:
+  push:
+    branches: [tools/fetch-samples]
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch pages
+        run: |
+          mkdir -p out && cd out
+          UA='Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36'
+          get() { # name url cookie
+            curl -sS -L -A "$UA" -H "Cookie: $3" -H 'Accept-Language: ja' \
+              -D "$1.headers" -o "$1.html" -w "$1 %{http_code} %{url_effective}\n" "$2" >> status.txt || echo "$1 FAILED" >> status.txt
+            sleep 3
+          }
+          get h_top 'https://syosetu.org/' 'over18=off'
+          get h_rank 'https://syosetu.org/?mode=rank' 'over18=off'
+          get h_search 'https://syosetu.org/search/?mode=search&word=%E9%AD%94%E6%B3%95' 'over18=off'
+          get h_robots 'https://syosetu.org/robots.txt' ''
+          id=$(grep -oE '/novel/[0-9]+/' h_rank.html h_top.html h_search.html 2>/dev/null | grep -oE '[0-9]+' | head -1)
+          echo "novel_id=$id" >> status.txt
+          if [ -n "$id" ]; then
+            get h_novel "https://syosetu.org/novel/$id/" 'over18=off'
+            get h_ep1 "https://syosetu.org/novel/$id/1.html" 'over18=off'
+            get h_novel_nocookie "https://syosetu.org/novel/$id/" ''
+          fi
+          get n18_rank_api 'https://api.syosetu.com/novel18api/api/?out=json&nocgenre=1&order=dailypoint&lim=2' ''
+          ncode=$(grep -oE '"ncode":"[A-Z0-9]+"' n18_rank_api.html | head -1 | grep -oE 'N[0-9A-Z]+' | tr 'A-Z' 'a-z')
+          echo "ncode=$ncode" >> status.txt
+          if [ -n "$ncode" ]; then
+            get n18_toc "https://novel18.syosetu.com/$ncode/" 'over18=yes'
+            get n18_ep1 "https://novel18.syosetu.com/$ncode/1/" 'over18=yes'
+          fi
+          cat status.txt
+      - name: Push to samples branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out
+          git init -q -b samples
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -qm "samples $(date -u +%FT%TZ)"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" samples
