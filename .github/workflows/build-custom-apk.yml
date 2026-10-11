@@ -1,0 +1,109 @@
+name: Build custom APK
+
+# 個人用ビルド（ハーメルン・ノクターン・ミッドナイト対応版）のAPKを作成し、
+# GitHub Releases に添付する。スマホからは Releases ページで APK を直接ダウンロードできる。
+#
+# - 公式版と共存できるよう applicationId を moe.l4ph.novelty.custom に変更する
+# - 署名鍵はリポジトリのシークレット（KEYSTORE_BASE64 等）があればそれを使い、
+#   なければ使い捨ての鍵で署名する（その場合、更新時は一度アンインストールが必要）
+
+on:
+  push:
+    branches: [feature/hameln-nocturne-midnight]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-custom-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and release APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup mise
+        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+        with:
+          cache: true
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
+
+      - name: Get Flutter packages
+        run: mise run get
+
+      - name: Run code generation
+        run: mise run codegen
+
+      # テスト結果はログで確認できるようにし、失敗してもAPKは作成する
+      - name: Run site tests
+        continue-on-error: true
+        run: >-
+          mise exec -- flutter test
+          test/sites test/utils/work_url_test.dart
+          test/models/novel_download_summary_test.dart
+
+      - name: Use separate application id and label
+        run: |
+          sed -i 's/applicationId = "moe.l4ph.novelty"/applicationId = "moe.l4ph.novelty.custom"/' \
+            android/app/build.gradle.kts
+          sed -i 's/android:label="Novelty"/android:label="Novelty+"/' \
+            android/app/src/main/AndroidManifest.xml
+          grep -n "applicationId" android/app/build.gradle.kts
+
+      - name: Create signing config
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
+            cat > android/app/key.properties <<EOF
+          storePassword=$KEY_STORE_PASSWORD
+          keyPassword=$KEY_PASSWORD
+          keyAlias=$KEY_ALIAS
+          storeFile=upload-keystore.jks
+          EOF
+          else
+            echo "::warning::署名鍵シークレットがないため使い捨ての鍵で署名します"
+            mise exec -- keytool -genkeypair \
+              -keystore android/app/ci-keystore.jks \
+              -storepass android -keypass android \
+              -alias androiddebugkey -keyalg RSA -keysize 2048 \
+              -validity 10000 -dname "CN=Custom, O=Novelty, C=JP"
+            cat > android/app/key.properties <<'EOF'
+          storePassword=android
+          keyPassword=android
+          keyAlias=androiddebugkey
+          storeFile=ci-keystore.jks
+          EOF
+          fi
+
+      - name: Build APK (arm64)
+        run: >-
+          mise exec -- flutter build apk --release
+          --target-platform android-arm64
+
+      - name: Publish to GitHub Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="custom-${GITHUB_RUN_NUMBER}"
+          cp build/app/outputs/flutter-apk/app-release.apk "novelty-custom-arm64.apk"
+          gh release create "$tag" "novelty-custom-arm64.apk" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Novelty+ ビルド #${GITHUB_RUN_NUMBER}" \
+            --notes "ハーメルン・ノクターン・ミッドナイト対応の個人用ビルドです。" \
+            --prerelease
