@@ -61,6 +61,17 @@ class RankingList extends HookConsumerWidget {
           children: [
             const Text('読み込みに失敗しました'),
             const SizedBox(height: 8),
+            // 原因の切り分けのため、エラー内容を小さく表示する
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SelectableText(
+                '${rankingState.error}',
+                key: const Key('ranking_error_detail'),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
                 unawaited(

@@ -353,6 +353,19 @@ class _EnrichedSearchResults extends HookConsumerWidget {
             const Icon(Icons.search_off, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
             const Text('検索結果がありません'),
+            // 取得に失敗した場合は原因を小さく表示する（切り分け用）
+            if (searchState.error != null) ...[
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: SelectableText(
+                  '${searchState.error}',
+                  key: const Key('search_error_detail'),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            ],
             const SizedBox(height: 16),
             OutlinedButton(
               onPressed: onModifySearch,

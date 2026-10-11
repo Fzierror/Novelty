@@ -186,6 +186,31 @@ void main() {
     });
   });
 
+  group('エラーの切り分け', () {
+    test('Cloudflareの確認ページはBotChallengeException', () async {
+      final adapter = _HandlerAdapter(
+        (_) => (
+          403,
+          '<html><head><title>Just a moment...</title></head></html>',
+        ),
+      );
+      await expectLater(
+        _site(adapter).fetchRanking('daily'),
+        throwsA(isA<BotChallengeException>()),
+      );
+    });
+
+    test('ランキングから作品が見つからない場合はFormatException', () async {
+      final adapter = _HandlerAdapter(
+        (_) => (200, '<html><body></body></html>'),
+      );
+      await expectLater(
+        _site(adapter).fetchRanking('daily'),
+        throwsA(isA<FormatException>()),
+      );
+    });
+  });
+
   group('検索・ランキング', () {
     test('検索結果から作品ID・タイトル・作者と次ページ有無を取得する', () async {
       final adapter = _HandlerAdapter(_only('/search/', 'search.html'));

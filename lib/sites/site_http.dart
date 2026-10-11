@@ -46,7 +46,41 @@ class SiteHttpException implements Exception {
   final String url;
 
   @override
-  String toString() => 'SiteHttpException($statusCode): $url';
+  String toString() => 'HTTP $statusCode エラー: $url';
+}
+
+/// Cloudflare等のボット確認ページが返され、本文を取得できなかった場合の例外。
+class BotChallengeException implements Exception {
+  /// コンストラクタ。
+  const BotChallengeException(this.statusCode, this.url);
+
+  /// HTTPステータスコード。
+  final int statusCode;
+
+  /// リクエストURL。
+  final String url;
+
+  @override
+  String toString() =>
+      'サイトのボット確認（Cloudflare）でブロックされました '
+      '(HTTP $statusCode): $url';
+}
+
+/// レスポンスがCloudflareのボット確認ページかどうかを判定する。
+///
+/// `cf-mitigated: challenge` ヘッダー、または確認ページ特有の
+/// タイトルが含まれるかで判定する。
+bool isBotChallenge({
+  required Map<String, List<String>> headers,
+  required String body,
+}) {
+  final mitigated = headers['cf-mitigated']?.join(',') ?? '';
+  if (mitigated.contains('challenge')) {
+    return true;
+  }
+  // 通常ページにもCloudflareのスクリプトは含まれ得るため、
+  // 確認ページ固有のタイトルのみで判定する
+  return body.contains('<title>Just a moment...</title>');
 }
 
 /// ブラウザ相当のUser-Agent。

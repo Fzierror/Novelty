@@ -146,6 +146,12 @@ class HamelnSite extends NovelSite {
     );
     final html = await _fetch(uri.toString());
     final (novels, hasNext) = parseNovelList(html, page: page);
+    if (novels.isEmpty && page == 1) {
+      // 構造が想定と違う場合に黙って空表示にならないよう明示的に失敗させる
+      throw FormatException(
+        'ランキングから作品を見つけられませんでした（ページ構造の不一致）: $uri',
+      );
+    }
     return RankingPage(novels: novels, hasNextPage: hasNext);
   }
 
@@ -437,12 +443,16 @@ class HamelnSite extends NovelSite {
       ),
     );
     final status = response.statusCode ?? -1;
+    final body = response.data ?? '';
+    if (isBotChallenge(headers: response.headers.map, body: body)) {
+      throw BotChallengeException(status, url);
+    }
     if (status == 404) {
       throw const NovelNotFoundException();
     }
     if (status != 200) {
       throw SiteHttpException(status, url);
     }
-    return response.data ?? '';
+    return body;
   }
 }
