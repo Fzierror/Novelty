@@ -1,0 +1,218 @@
+Resolving dependencies...
+Downloading packages...
+  _fe_analyzer_shared 99.0.0 (109.0.0 available)
+  analysis_server_plugin 0.3.14 (0.3.24 available)
+  analyzer 12.1.0 (14.5.0 available)
+  analyzer_buffer 0.3.3 (0.3.4 available)
+  analyzer_plugin 0.14.8 (0.14.18 available)
+  archive 4.0.9 (4.5.1 available)
+  build 4.0.7 (4.0.11 available)
+  build_config 1.3.0 (1.3.3 available)
+  build_daemon 4.1.1 (4.1.6 available)
+  build_runner 2.15.1 (2.16.2 available)
+  built_collection 5.1.1 (5.1.2 available)
+  built_value 8.12.5 (8.13.0 available)
+  cli_util 0.4.2 (0.6.0 available)
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.0.0 (2.1.0 available)
+  code_builder 4.11.1 (4.12.0 available)
+  coverage 1.15.0 (1.15.1 available)
+  cross_file 0.3.5+2 (0.4.0 available)
+  dart_style 3.1.8 (3.1.13 available)
+  dbus 0.7.12 (0.8.0 available)
+  dio 5.11.0 (5.11.1 available)
+  dio_web_adapter 2.1.2 (2.2.2 available)
+  drift 2.34.3 (2.35.2 available)
+  drift_dev 2.34.0 (2.35.1 available)
+  dynamic_color 1.8.1 (2.1.0 available)
+  file_picker 10.3.10 (13.1.0 available)
+  flutter_plugin_android_lifecycle 2.0.34 (2.0.35 available)
+  flutter_riverpod 3.3.2 (3.4.3 available)
+  freezed 3.2.6-dev.1 (4.0.2 available)
+  frontend_server_client 4.0.0 (4.1.0 available)
+  glob 2.1.3 (2.2.0 available)
+  go_router 17.3.0 (18.0.2 available)
+  go_router_builder 4.4.0 (4.5.0 available)
+  hooks 1.0.2 (2.2.0 available)
+  hooks_riverpod 3.3.2 (3.4.3 available)
+  html 0.15.6 (0.15.7 available)
+  intl 0.20.2 (0.20.3 available)
+  io 1.0.5 (1.1.0 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  mime 2.0.0 (2.1.0 available)
+  mockito 5.6.4 (5.8.1 available)
+  native_toolchain_c 0.17.6 (0.19.5 available)
+  objective_c 9.3.0 (9.6.2 available)
+  package_config 2.2.0 (3.0.0 available)
+  path_provider_android 2.2.23 (2.3.1 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  petitparser 7.0.2 (7.1.0 available)
+  platform 3.1.6 (3.2.0 available)
+  pool 1.5.2 (1.5.3 available)
+  posix 6.5.0 (6.5.2 available)
+  pub_semver 2.2.0 (2.2.1 available)
+  pubspec_parse 1.5.0 (1.6.0 available)
+  riverpod 3.3.2 (3.4.3 available)
+  riverpod_analyzer_utils 1.0.0-dev.10 (1.0.0-dev.12 available)
+  riverpod_annotation 4.0.3 (4.0.7 available)
+  riverpod_generator 4.0.4 (4.0.9 available)
+  riverpod_lint 3.1.4 (3.1.9 available)
+  shared_preferences 2.5.5 (2.5.6 available)
+  shared_preferences_android 2.4.23 (2.4.28 available)
+  shared_preferences_foundation 2.5.6 (2.5.7 available)
+  source_gen 4.2.2 (4.3.0 available)
+  source_maps 0.10.13 (0.10.14 available)
+  sqlite3 3.5.0 (3.7.0 available)
+  sqlparser 0.44.5 (0.45.0 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  stream_transform 2.1.1 (2.1.2 available)
+  test 1.31.0 (1.33.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  test_core 0.6.17 (0.6.21 available)
+  url_launcher 6.3.2 (6.3.3 available)
+  url_launcher_android 6.3.29 (6.3.33 available)
+  url_launcher_ios 6.4.1 (6.4.2 available)
+  url_launcher_linux 3.2.2 (3.2.3 available)
+  url_launcher_macos 3.2.5 (3.2.6 available)
+  url_launcher_web 2.4.2 (2.4.3 available)
+  url_launcher_windows 3.1.5 (3.1.6 available)
+  uuid 4.5.3 (4.6.0 available)
+  vector_graphics_compiler 1.2.0 (1.3.0 available)
+  vector_math 2.2.0 (2.4.3 available)
+  very_good_analysis 10.3.0 (11.0.0 available)
+  vm_service 15.0.2 (15.3.0 available)
+  win32 5.15.0 (6.4.0 available)
+  xml 6.6.1 (7.1.0 available)
+  yaml 3.1.3 (3.1.4 available)
+Got dependencies!
+87 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart
+00:00 +0: /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart: NovelSource 定義されているサイト種別は5つ
+00:00 +1: /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart: NovelSource narou のメタデータが仕様どおり
+00:00 +2: /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart: NovelSource kakuyomu のメタデータが仕様どおり
+00:00 +3: /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart: NovelSource nocturne / midnight はnovel18を参照する
+00:00 +4: /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart: NovelSource hameln のメタデータが仕様どおり
+00:00 +5: /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart: NovelSource dbId は enum 名と同一
+00:00 +6: /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart: NovelSource dbId はサイト間で重複しない
+00:00 +7: /home/runner/work/Novelty/Novelty/test/sites/novel_source_test.dart: NovelSource values.byName() で dbId からインスタンスを復元できる
+00:02 +8: /home/runner/work/Novelty/Novelty/test/sites/novel_site_registry_test.dart: novelSiteRegistry narou が登録されており実装は NarouSite
+00:02 +9: /home/runner/work/Novelty/Novelty/test/sites/novel_site_registry_test.dart: novelSiteRegistry kakuyomu が登録されており実装は KakuyomuSite
+00:02 +10: /home/runner/work/Novelty/Novelty/test/sites/novel_site_registry_test.dart: novelSiteRegistry nocturne / midnight は Syosetu18Site（nocgenre 1 / 4）
+00:02 +11: /home/runner/work/Novelty/Novelty/test/sites/novel_site_registry_test.dart: novelSiteRegistry hameln が登録されており実装は HamelnSite
+00:02 +12: /home/runner/work/Novelty/Novelty/test/sites/novel_site_registry_test.dart: novelSiteRegistry すべてのサイト種別が登録されている
+00:02 +13: /home/runner/work/Novelty/Novelty/test/sites/novel_site_registry_test.dart: novelSiteRegistry 全サイトにランキング種別が1つ以上ある（探索画面のタブ用）
+00:02 +14: /home/runner/work/Novelty/Novelty/test/sites/novel_site_registry_test.dart: novelSiteRegistry 登録済みエントリのキーと実装の source が一致する
+00:02 +15: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchNovelInfo 作品トップからタイトル・作者・あらすじ・話数を取得する
+00:02 +16: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchNovelInfo 年齢確認Cookieとブラウザ相当のUser-Agentを付与する
+00:02 +17: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchNovelInfo 短編は話数1・novelType 2
+00:02 +18: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchNovelInfo 404はNovelNotFoundException
+00:02 +19: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchToc 目次テーブルのエピソードを目次順に取得する
+00:02 +20: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchToc 短編は作品トップを1話として返す
+00:02 +21: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchToc fetchTocPageはデフォルト実装で100件ずつ区切る
+00:02 +22: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchEpisode 前書き・後書きを除いた本文とサブタイトルを取得する
+00:02 +23: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchEpisode 短編は目次で解決したURL（作品トップ）から本文を取得する
+00:02 +24: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: fetchEpisode 年齢確認ページが返った場合はFormatException
+00:02 +25: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: スマホ版レイアウト ランキングのタイトルから順位を除き、テキストの作者名を取得する
+00:02 +26: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: スマホ版レイアウト 目次のリンク内の日時をサブタイトルから分離する
+00:02 +27: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: スマホ版レイアウト uid形式の作者リンクから作者名を取得する
+00:02 +28: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: HtmlFetcher（WebView取得） fetcherを指定するとHTTP通信の代わりにそれで取得する
+00:02 +29: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: エラーの切り分け Cloudflareの確認ページはBotChallengeException
+00:02 +30: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: エラーの切り分け ランキングから作品が見つからない場合はFormatException
+00:02 +31: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: 検索・ランキング 検索結果から作品ID・タイトル・作者と次ページ有無を取得する
+00:02 +32: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: 検索・ランキング 2ページ目はpageパラメータを付与する
+00:02 +33: /home/runner/work/Novelty/Novelty/test/sites/hameln/hameln_site_test.dart: 検索・ランキング ランキングはトップページのmodeパラメータで取得する
+00:03 +34: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite fetchNovelInfo 作品ページの__NEXT_DATA__から作品情報をパースできる
+00:03 +35: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite fetchNovelInfo __NEXT_DATA__が無い場合はFormatExceptionを投げる
+00:03 +36: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite fetchToc episode_sidebarの目次から全エピソードを目次順連番で返す
+00:03 +37: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite fetchEpisode エピソードページから本文とタイトルをパースできる
+00:03 +38: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite fetchEpisode url省略時は目次からURLを解決して本文を取得する
+00:03 +39: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite アクセス方針 robots.txtで禁止された/readページは取得しない
+00:03 +40: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite アクセス方針 レートリミッターがリクエスト間隔を保証する
+00:03 +41: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite アクセス方針 レートリミッターがリクエスト間隔を保証する
+00:03 +42: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite アクセス方針 レートリミッターがリクエスト間隔を保証する
+00:03 +43: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite アクセス方針 レートリミッターがリクエスト間隔を保証する
+00:03 +44: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite アクセス方針 レートリミッターがリクエスト間隔を保証する
+00:03 +45: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite アクセス方針 レートリミッターがリクエスト間隔を保証する
+00:03 +46: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite アクセス方針 レートリミッターがリクエスト間隔を保証する
+00:03 +47: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +48: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +49: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +50: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +51: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +52: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +53: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +54: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +55: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +56: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocPageは指定ページのみを取得する
+00:03 +57: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite fetchRanking rankedWorksクエリが無い場合はFormatExceptionを投げる
+00:03 +58: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 年齢確認Cookieを付与する
+00:03 +59: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 年齢確認Cookieを付与する
+00:03 +60: /home/runner/work/Novelty/Novelty/test/sites/kakuyomu/kakuyomu_site_test.dart: KakuyomuSite fetchRanking ページング（page）をURLクエリに反映する
+00:03 +61: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocは次ページがなくなるまで取得する
+00:03 +62: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 fetchTocは次ページがなくなるまで取得する
+00:03 +63: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: 目次 短編は作品トップを1話として返す
+00:03 +64: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: fetchEpisode 前書き・後書きを除いた本文を取得する
+00:03 +65: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: fetchEpisode 短編は /{ncode}/1/ が404なら作品トップにフォールバックする
+00:03 +66: /home/runner/work/Novelty/Novelty/test/sites/syosetu18/syosetu18_site_test.dart: fetchEpisode 年齢確認ページが返った場合はFormatException
+00:04 +67: /home/runner/work/Novelty/Novelty/test/sites/site_http_test.dart: isBotChallenge cf-mitigated: challenge ヘッダーがあれば確認ページと判定する
+00:04 +68: /home/runner/work/Novelty/Novelty/test/sites/site_http_test.dart: isBotChallenge Just a moment... のタイトルがあれば確認ページと判定する
+00:04 +69: /home/runner/work/Novelty/Novelty/test/sites/site_http_test.dart: isBotChallenge 通常ページは確認ページと判定しない
+00:04 +70: /home/runner/work/Novelty/Novelty/test/sites/narou/narou_site_test.dart: NarouSite source は NovelSource.narou
+00:04 +71: /home/runner/work/Novelty/Novelty/test/sites/narou/narou_site_test.dart: NarouSite ジャンルが genreList の全20件を正しい大ジャンルIDで保持する
+00:04 +72: /home/runner/work/Novelty/Novelty/test/sites/narou/narou_site_test.dart: NarouSite なろうの全ジャンルは小ジャンル（isBigGenre: false）
+00:04 +73: /home/runner/work/Novelty/Novelty/test/sites/narou/narou_site_test.dart: NarouSite ランキング種別が既存の5種別と一致する
+00:04 +74: /home/runner/work/Novelty/Novelty/test/sites/narou/narou_site_test.dart: NarouSite ランキング種別の id は重複しない
+00:05 +75: /home/runner/work/Novelty/Novelty/test/utils/work_url_test.dart: buildWorkUrl なろうはncodeを正規化して作品URLを組み立てる
+00:05 +76: /home/runner/work/Novelty/Novelty/test/utils/work_url_test.dart: buildWorkUrl カクヨムはworkIdで作品URLを組み立てる
+00:05 +77: /home/runner/work/Novelty/Novelty/test/utils/work_url_test.dart: buildWorkUrl なろうはncodeがnullでもクラッシュしない（空URL）
+00:05 +78: /home/runner/work/Novelty/Novelty/test/utils/work_url_test.dart: buildWorkUrl カクヨムはworkIdがnullでもクラッシュしない
+00:05 +79: /home/runner/work/Novelty/Novelty/test/utils/work_url_test.dart: buildWorkUrl ノクターン／ミッドナイトはnovel18の作品URLを組み立てる
+00:05 +80: /home/runner/work/Novelty/Novelty/test/utils/work_url_test.dart: buildWorkUrl ハーメルンはworkIdで作品URLを組み立てる
+00:05 +81: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary コンストラクタでフィールドが正しく初期化される
+00:05 +82: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary copyWithでフィールドを変更できる
+00:05 +83: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary isCompleteゲッターが正しく動作する
+00:05 +84: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary isDownloadingゲッターが正しく動作する
+00:05 +85: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary downloadStatusゲッターが正しく動作する
+00:05 +86: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary downloadedEpisodesゲッターがsuccessCountを返す
+00:05 +87: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary 同じ値を持つインスタンスは等価
+00:05 +88: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary 異なる値を持つインスタンスは非等価
+00:05 +89: /home/runner/work/Novelty/Novelty/test/models/novel_download_summary_test.dart: NovelDownloadSummary toStringが正しい形式を返す
+00:09 +90: /home/runner/work/Novelty/Novelty/test/widgets/ranking_list_test.dart: RankingList Widget Tests should display ranking list items
+[Novelty][Ranking] fetchNextPage: source=NovelSource.narou rankingType=d page=1 isLoading=false isLoadingMore=false hasMore=true mounted=true
+[Novelty][Ranking] fetchNextPage(narou): API page=1 mounted=true
+[Novelty][Ranking] fetchNextPage(narou): page=1 取得成功 5件
+00:10 +91: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile status display should display "完結" badge for novel with end == 0
+00:10 +91: /home/runner/work/Novelty/Novelty/test/widgets/ranking_list_test.dart: RankingList Widget Tests should update query when filter changes
+[Novelty][Ranking] fetchNextPage: source=NovelSource.narou rankingType=d page=1 isLoading=false isLoadingMore=false hasMore=true mounted=true
+[Novelty][Ranking] fetchNextPage(narou): API page=1 mounted=true
+[Novelty][Ranking] fetchNextPage(narou): page=1 取得成功 1件
+00:10 +92: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile status display should display "完結" badge for novel with end == 0
+00:10 +92: /home/runner/work/Novelty/Novelty/test/widgets/ranking_list_test.dart: RankingList Widget Tests should filter ongoing novels locally
+[Novelty][Ranking] fetchNextPage: source=NovelSource.narou rankingType=d page=1 isLoading=false isLoadingMore=false hasMore=true mounted=true
+[Novelty][Ranking] fetchNextPage(narou): API page=1 mounted=true
+[Novelty][Ranking] fetchNextPage(narou): page=1 取得成功 2件
+00:10 +93: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile status display should display "完結" badge for novel with end == 0
+00:10 +93: /home/runner/work/Novelty/Novelty/test/widgets/ranking_list_test.dart: RankingList Widget Tests should refresh list when filter changes dynamically
+[Novelty][Ranking] fetchNextPage: source=NovelSource.narou rankingType=d page=1 isLoading=false isLoadingMore=false hasMore=true mounted=true
+[Novelty][Ranking] fetchNextPage(narou): API page=1 mounted=true
+[Novelty][Ranking] fetchNextPage(narou): page=1 取得成功 1件
+00:10 +94: /home/runner/work/Novelty/Novelty/test/widgets/ranking_list_test.dart: RankingList Widget Tests should refresh list when filter changes dynamically
+[Novelty][Ranking] fetchNextPage: source=NovelSource.narou rankingType=d page=1 isLoading=false isLoadingMore=false hasMore=true mounted=true
+[Novelty][Ranking] fetchNextPage(narou): API page=1 mounted=true
+[Novelty][Ranking] fetchNextPage(narou): page=1 取得成功 1件
+00:10 +95: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile status display should display "連載" badge for serialized novel with end == 1
+00:10 +96: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile status display should display "短編" badge for short story with end == 0
+00:10 +97: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile status display should display "短編" badge for short story with end == 1
+00:10 +98: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile widget structure should display title and metadata
+00:10 +99: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile widget structure should display rank when rank is provided
+00:10 +100: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: NovelListTile widget structure should not display rank when rank is null
+00:10 +101: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: flutter_hooks integration genre name カクヨムのジャンルIDをサイトのマスタデータから解決する
+00:10 +102: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: flutter_hooks integration genre name なろうのジャンルIDを従来どおり解決する
+00:10 +103: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: flutter_hooks integration should use HookWidget and maintain functionality
+00:10 +104: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: flutter_hooks integration 取得できない項目の扱い（ハーメルン等） 作者・状態・ジャンルが不明でも null や 不明 を表示しない
+00:11 +105: /home/runner/work/Novelty/Novelty/test/widgets/novel_list_tile_test.dart: flutter_hooks integration 取得できない項目の扱い（ハーメルン等） 作者が取得できていれば表示する
+00:11 +106: All tests passed!
