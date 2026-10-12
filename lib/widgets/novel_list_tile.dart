@@ -63,11 +63,16 @@ class NovelListTile extends HookWidget {
     );
 
     // ステータスの計算をメモ化
-    // 0: 完結, 1: 連載中, 2: 短編
+    // 0: 完結, 1: 連載中, 2: 短編, -1: 不明（バッジ非表示）
+    // ジャンル区分を持たないサイト（ハーメルン・R18系）はジャンルを表示しない
+    final hasGenres = defaultNovelSiteRegistry[item.source]!.genres.isNotEmpty;
+
     final statusType = useMemoized(
       () {
         if (item.novelType == 2) return 2; // 短編
         if (item.end == 1) return 1; // 連載中
+        // 一覧で状態を取得できないサイト（ハーメルン等）は表示しない
+        if (item.end == null) return -1;
         return 0; // 完結
       },
       [item.novelType, item.end],
@@ -82,6 +87,13 @@ class NovelListTile extends HookWidget {
       },
       [item.source, item.allPoint],
     );
+
+    // 作者・ジャンル・評価指標の行。取得できなかった項目は省く
+    final subtitleText = [
+      if (item.writer != null && item.writer!.isNotEmpty) item.writer!,
+      if (hasGenres) genreName,
+      if (pointSuffix.isNotEmpty) pointSuffix.substring(3),
+    ].join(' • ');
 
     // デフォルトのonTapハンドラーをメモ化
     final defaultOnTap = useCallback(
@@ -192,7 +204,8 @@ class NovelListTile extends HookWidget {
                         const SizedBox(width: 8),
                       ],
                       // Status Badge
-                      Container(
+                      if (statusType >= 0)
+                        Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 6,
                           vertical: 2,
@@ -207,7 +220,8 @@ class NovelListTile extends HookWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '${item.writer} • $genreName$pointSuffix',
+                    // 取得できなかった項目（作者・ジャンル）は表示しない
+                    subtitleText,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),

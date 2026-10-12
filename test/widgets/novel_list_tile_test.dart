@@ -276,5 +276,48 @@ void main() {
       final widget = tester.widget(find.byType(NovelListTile));
       expect(widget, isA<HookWidget>());
     });
+    group('取得できない項目の扱い（ハーメルン等）', () {
+      testWidgets('作者・状態・ジャンルが不明でも null や 不明 を表示しない', (
+        tester,
+      ) async {
+        const item = NovelInfo(
+          source: NovelSource.hameln,
+          workId: '123456',
+          title: 'ハーメルン作品',
+        );
+
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: NovelListTile(item: item),
+            ),
+          ),
+        );
+
+        expect(find.text('ハーメルン作品'), findsOneWidget);
+        expect(find.textContaining('null'), findsNothing);
+        expect(find.textContaining('不明'), findsNothing);
+        expect(find.text('完結'), findsNothing);
+      });
+
+      testWidgets('作者が取得できていれば表示する', (tester) async {
+        const item = NovelInfo(
+          source: NovelSource.hameln,
+          workId: '123456',
+          title: 'ハーメルン作品',
+          writer: 'テスト作者',
+        );
+
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: NovelListTile(item: item),
+            ),
+          ),
+        );
+
+        expect(find.text('テスト作者'), findsOneWidget);
+      });
+    });
   });
 }

@@ -61,9 +61,23 @@ class HamelnSite extends NovelSite {
   /// エピソードへのリンク（`./{n}.html` や `/novel/{id}/{n}.html`）。
   static final RegExp _episodeLinkPattern = RegExp(r'(?:^|/)(\d+)\.html$');
 
-  /// 日時表記（例: `2024年01月02日(火) 03:04`）。
+  /// 日時表記。
+  ///
+  /// PC版の `2024年01月02日(火) 03:04` と
+  /// スマホ版の `2024/01/02 03:04` の両方に対応する。
   static final RegExp _datePattern = RegExp(
-    r'(\d{4})年(\d{1,2})月(\d{1,2})日[^\d]*?(\d{1,2}):(\d{2})',
+    r'(\d{4})(?:年|/)(\d{1,2})(?:月|/)(\d{1,2})日?[^\d]*?(\d{1,2}):(\d{2})',
+  );
+
+  /// 改稿日時（例: `(改：2026/10/11 14:35)`）の「改」以降。
+  static final RegExp _revisedPattern = RegExp(r'改[^\d]{0,4}(\d{4}.*)');
+
+  /// 一覧のタイトル先頭に付く順位表記（例: `1位 `）。
+  static final RegExp _rankPrefixPattern = RegExp(r'^\s*\d+\s*位\s*');
+
+  /// 作者名のテキスト表記（例: `作者：名前` / `作：名前`）。
+  static final RegExp _writerTextPattern = RegExp(
+    r'作者?\s*[：:]\s*([^\s　/|｜]+)',
   );
 
   @override
@@ -257,7 +271,8 @@ class HamelnSite extends NovelSite {
       }
       // 最初に見つかった非空のリンクテキストをタイトルとする
       if (titles[id]!.isEmpty && text.isNotEmpty) {
-        titles[id] = text;
+        // ランキングではタイトル先頭に「1位」等が付くため除去する
+        titles[id] = text.replaceFirst(_rankPrefixPattern, '').trim();
         anchors[id] = a;
       }
     }
@@ -300,22 +315,27 @@ class HamelnSite extends NovelSite {
       if (!url.startsWith(base.toString()) || !seen.add(url)) {
         continue;
       }
-      final row = _ancestor(a, 'tr');
-      final rowText = row?.text ?? '';
+      // PC版は表の行、スマホ版はリンク内（またはその親要素）に日時が入る
+      final row = _ancestor(a, 'tr') ?? _singleEpisodeParent(a);
+      final rowText = _datePattern.hasMatch(a.text)
+          ? a.text
+          : (row?.text ?? a.text);
       final revisedTitle = row
           ?.querySelectorAll('span[title]')
           .map((s) => s.attributes['title']!)
           .where((t) => t.contains('改稿'))
           .firstOrNull;
+      final revisedText =
+          revisedTitle ?? _revisedPattern.firstMatch(rowText)?.group(1);
       episodes.add(
         Episode(
           source: NovelSource.hameln,
           // 目次順の連番（アプリ内でのエピソード番号）
           index: episodes.length + 1,
-          subtitle: a.text.trim(),
+          subtitle: _stripDates(a.text),
           url: url,
           update: _normalizeDate(rowText),
-          revised: revisedTitle == null ? null : _normalizeDate(revisedTitle),
+          revised: revisedText == null ? null : _normalizeDate(revisedText),
         ),
       );
     }
@@ -350,10 +370,10 @@ class HamelnSite extends NovelSite {
     if (author != null && author.isNotEmpty) {
       return author;
     }
-    return document
-        .querySelector('a[href*="/user/"]')
-        ?.text
-        .trim();
+    final link =
+        document.querySelector('a[href*="/user/"]') ??
+        document.querySelector('a[href*="uid="]');
+    return link?.text.trim();
   }
 
   /// エピソードのサブタイトル。
@@ -370,24 +390,77 @@ class HamelnSite extends NovelSite {
   }
 
   /// 一覧のリンク周辺から作者名を探す。
+  ///
+  /// その作品だけを含む最も外側の要素（ブロック）と、
+  /// 次の作品が現れるまでの後続の兄弟要素を探索範囲とする。
   String? _writerNear(dom.Element anchor, String id) {
     dom.Element? block;
     var current = anchor.parent;
     // その作品だけを含む最も外側の要素まで遡る（最大6階層）
     for (var depth = 0; current != null && depth < 6; depth++) {
-      final ids = current
-          .querySelectorAll('a[href]')
-          .map((a) => _novelIdOf(a.attributes['href']))
-          .whereType<String>()
-          .toSet();
-      if (ids.length > 1 || (ids.isNotEmpty && !ids.contains(id))) {
+      if (!_onlyContainsNovel(current, id)) {
         break;
       }
       block = current;
       current = current.parent;
     }
-    final writer = block?.querySelector('a[href*="/user/"]')?.text.trim();
-    return (writer == null || writer.isEmpty) ? null : writer;
+    block ??= anchor;
+
+    final scopes = <dom.Element>[block];
+    var sibling = block.nextElementSibling;
+    // 作者が別の行・要素に分かれているレイアウトに備え、後続要素も確認する
+    for (var i = 0; sibling != null && i < 3; i++) {
+      if (!_onlyContainsNovel(sibling, id)) {
+        break;
+      }
+      scopes.add(sibling);
+      sibling = sibling.nextElementSibling;
+    }
+
+    for (final scope in scopes) {
+      final link =
+          scope.querySelector('a[href*="/user/"]') ??
+          scope.querySelector('a[href*="uid="]');
+      final linkText = link?.text.trim();
+      if (linkText != null && linkText.isNotEmpty) {
+        return linkText;
+      }
+      final match = _writerTextPattern.firstMatch(scope.text);
+      if (match != null) {
+        return match.group(1);
+      }
+    }
+    return null;
+  }
+
+  /// [element] 内の作品リンクが [id] のものだけ（または無い）かどうか。
+  bool _onlyContainsNovel(dom.Element element, String id) {
+    final ids = element
+        .querySelectorAll('a[href]')
+        .map((a) => _novelIdOf(a.attributes['href']))
+        .whereType<String>()
+        .toSet();
+    return ids.isEmpty || (ids.length == 1 && ids.contains(id));
+  }
+
+  /// エピソードリンクの親要素が、そのエピソードだけを含む場合に返す。
+  ///
+  /// 複数話をまとめて含む親要素の日時を誤って拾わないようにする。
+  dom.Element? _singleEpisodeParent(dom.Element a) {
+    final parent = a.parent;
+    if (parent == null) {
+      return null;
+    }
+    final links = parent.querySelectorAll('a[href]').where(_isEpisodeLink);
+    return links.length == 1 ? parent : null;
+  }
+
+  /// テキストから日時以降（投稿日時・改稿表記）を取り除く。
+  String _stripDates(String text) {
+    final m = _datePattern.firstMatch(text);
+    final head = m == null ? text : text.substring(0, m.start);
+    final trimmed = head.trim();
+    return trimmed.isEmpty ? text.trim() : trimmed;
   }
 
   String? _novelIdOf(String? href) {

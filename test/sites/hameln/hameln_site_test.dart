@@ -201,6 +201,42 @@ void main() {
     });
   });
 
+  group('スマホ版レイアウト', () {
+    test('ランキングのタイトルから順位を除き、テキストの作者名を取得する', () {
+      final site = _site(_HandlerAdapter((_) => null));
+      final (novels, _) = site.parseNovelList(_fixture('ranking_mobile.html'));
+
+      expect(novels.map((n) => n.workId), ['301', '302']);
+      expect(novels.map((n) => n.title), [
+        'TASでカンストした次の人生。',
+        '卍解までは転生者の嗜み。',
+      ]);
+      expect(novels.map((n) => n.writer), ['作者いち', '作者に']);
+    });
+
+    test('目次のリンク内の日時をサブタイトルから分離する', () {
+      final site = _site(_HandlerAdapter((_) => null));
+      final episodes = site.parseToc(_fixture('novel_top_mobile.html'), '9');
+
+      expect(episodes.map((e) => e.subtitle), [
+        '1話　アル・ムーディ',
+        '2話　組分けフォイ',
+      ]);
+      expect(episodes[0].update, '2026/10/04 07:44');
+      expect(episodes[0].revised, '2026/10/11 14:35');
+      expect(episodes[1].update, '2026/10/04 12:24');
+      expect(episodes[1].revised, isNull);
+    });
+
+    test('uid形式の作者リンクから作者名を取得する', () {
+      final site = _site(_HandlerAdapter((_) => null));
+      final info = site.parseNovelInfo(_fixture('novel_top_mobile.html'), '9');
+
+      expect(info.writer, 'スマホ作者');
+      expect(info.generalAllNo, 2);
+    });
+  });
+
   group('HtmlFetcher（WebView取得）', () {
     test('fetcherを指定するとHTTP通信の代わりにそれで取得する', () async {
       final adapter = _HandlerAdapter((_) => null);
