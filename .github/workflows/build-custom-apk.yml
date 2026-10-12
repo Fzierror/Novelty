@@ -55,6 +55,7 @@ jobs:
             test/sites test/utils/work_url_test.dart \
             test/models/novel_download_summary_test.dart \
             test/widgets/ranking_list_test.dart \
+            test/widgets/novel_list_tile_test.dart \
             > ci-logs/test.txt 2>&1 || echo "TEST_EXIT=$?" >> ci-logs/test.txt
           tail -5 ci-logs/analyze.txt ci-logs/test.txt
 
